@@ -4,6 +4,7 @@ import org.hibernate.Transaction;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -25,11 +26,12 @@ import org.crazyit.app.domain.*;
 public class HqlQuery {
 	public static void main(String[] args) throws Exception {
 		HqlQuery mgr = new HqlQuery();
-		mgr.addPerson();
+//		mgr.getAllA();
+//		mgr.addPerson();
 //		 mgr.findBfromA();
 //		 mgr.deleteR();
 //		 mgr.deleteA();
-//		mgr.addToR();
+		mgr.addToR();
 		// 调用查询方法
 		// mgr.findPersons();
 		// // 调用第二个查询方法
@@ -159,44 +161,46 @@ public class HqlQuery {
 		// HibernateUtil.closeSession();
 
 		// 正确的方式
-		RRR r = new RRR("新增r", 1, 7);//必须实例化Id类，必须设置aid、bid值，否则报错。
+		RRR r = new RRR("r10", 7, 2);//必须实例化Id类，必须设置aid、bid值，否则报错。
 		Session sess = HibernateUtil.currentSession();
 		Transaction tx = sess.beginTransaction();
-		sess.save(r);
+		Serializable kk = sess.save(r);
+		System.out.println("save的返回值是Serializable:"+kk.toString());
 		tx.commit();
 		HibernateUtil.closeSession();
 	}
 	//删除 关联 r
 	private void deleteR(){
 		//可以
-		AAA a = new AAA(1, "a1");
-		BBB b = new BBB(2, "b2");
-		Session sess = HibernateUtil.currentSession();
-		Transaction tx = sess.beginTransaction();
-		Query query = sess.createQuery("from RRR where aaa=:aaa and bbb=:bbb");
-		query.setParameter("aaa", a);
-		query.setParameter("bbb", b);
-		RRR r = (RRR) query.list().get(0);
-		sess.delete(r);
-		tx.commit();
-		HibernateUtil.closeSession();
-		
-	   //可以
-//		RRR r = new RRR("新增r", 1, 7);
+//		AAA a = new AAA(1, "a1");
+//		BBB b = new BBB(2, "b2");
 //		Session sess = HibernateUtil.currentSession();
 //		Transaction tx = sess.beginTransaction();
+//		Query query = sess.createQuery("from RRR where aaa=:aaa and bbb=:bbb");
+//		query.setParameter("aaa", a);
+//		query.setParameter("bbb", b);
+//		RRR r = (RRR) query.list().get(0);
 //		sess.delete(r);
 //		tx.commit();
 //		HibernateUtil.closeSession();
+//		
+	   //可以
+		RRR r = new RRR("r8", 2, 2);
+		Session sess = HibernateUtil.currentSession();
+		Transaction tx = sess.beginTransaction();
+		sess.delete(r);
+		tx.commit();
+		HibernateUtil.closeSession();
 	}
 	//hql删除操作
 	private void deleteA(){
-		Integer aid  = 3;
+		Integer aid  = 9;
 		Session sess = HibernateUtil.currentSession();
 		Transaction tx = sess.beginTransaction();
 		Query query = sess.createQuery("delete AAA where aid=:aid");
 		query.setParameter("aid", aid);
-		query.executeUpdate();
+		Integer res = query.executeUpdate();
+		System.out.println("executeUpdate返回值："+res);
 		tx.commit();
 		HibernateUtil.closeSession();
 	}
@@ -230,4 +234,16 @@ public class HqlQuery {
 		tx.commit();
 		HibernateUtil.closeSession();
 	}
+	//获取全部的A
+	private void getAllA(){
+		Session sess = HibernateUtil.currentSession();
+		Transaction tx = sess.beginTransaction();
+		Query query = sess.createQuery("from AAA");
+		System.out.println(query.list().toString());
+		tx.commit();
+		HibernateUtil.closeSession();
+	}
+	//save()返回值是一个序列化对象，插入的当前行。以1作为起始行。
+	//delete() 返回值是void
+	//executeUpdate() 没有删除时0，删除1
 }
