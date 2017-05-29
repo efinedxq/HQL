@@ -5,7 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 /**
  * Description:
- * <br/>ÍøÕ¾: <a href="http://www.crazyit.org">·è¿ñJavaÁªÃË</a>
+ * <br/>ï¿½ï¿½Õ¾: <a href="http://www.crazyit.org">ï¿½ï¿½ï¿½Javaï¿½ï¿½ï¿½ï¿½</a>
  * <br/>Copyright (C), 2001-2016, Yeeku.H.Lee
  * <br/>This program is protected by copyright laws.
  * <br/>Program Name:
@@ -17,15 +17,15 @@ import javax.persistence.*;
 @Table(name = "person_inf")
 public class Person
 {
-	// ¶¨Òå±êÊ¶ÊôÐÔ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½
 	@Id @Column(name = "person_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	// ¶¨ÒåPersonÊµÀýµÄname³ÉÔ±±äÁ¿
+	// ï¿½ï¿½ï¿½ï¿½PersonÊµï¿½ï¿½ï¿½ï¿½nameï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½
 	private String name;
-	// ¶¨ÒåPersonÊµÀýµÄage³ÉÔ±±äÁ¿
+	// ï¿½ï¿½ï¿½ï¿½PersonÊµï¿½ï¿½ï¿½ï¿½ageï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½
 	private int age;
-	// ¶¨Òå¸ÃPersonÊµÌå¹ØÁªµÄËùÓÐMyEventÊµÌå
+	// ï¿½ï¿½ï¿½ï¿½ï¿½PersonÊµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½MyEventÊµï¿½ï¿½
 	@ManyToMany(targetEntity=MyEvent.class)
 	@JoinTable(name = "person_event" ,
 		joinColumns = @JoinColumn(name = "person_id"
@@ -35,16 +35,23 @@ public class Person
 	)
 	private Set<MyEvent> myEvents
 		= new HashSet<>();
-	// ¶¨ÒåÒ»¸ö¼¯ºÏÊôÐÔ
-	// ¼¯ºÏÊôÐÔ£¬±£Áô¸Ã¶ÔÏó¹ØÁªµÄÑ§Ð£
+	// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§Ð£
 	@ElementCollection(targetClass=String.class)
 	@CollectionTable(name="person_email_inf",
 		joinColumns=@JoinColumn(name="person_id" , nullable=false))
 	@Column(name="email_detail" , nullable=false)
 	private Set<String> emails
 		= new HashSet<>();
-
-	// idµÄsetterºÍgetter·½·¨
+    
+	public Person(){
+		
+	}
+	public Person(String name,int age){
+		this.name = name;
+		this.age = age;
+	}
+	// idï¿½ï¿½setterï¿½ï¿½getterï¿½ï¿½ï¿½ï¿½
 	public void setId(Integer id)
 	{
 		this.id = id;
@@ -54,7 +61,7 @@ public class Person
 		return this.id;
 	}
 
-	// nameµÄsetterºÍgetter·½·¨
+	// nameï¿½ï¿½setterï¿½ï¿½getterï¿½ï¿½ï¿½ï¿½
 	public void setName(String name)
 	{
 		this.name = name;
@@ -64,7 +71,7 @@ public class Person
 		return this.name;
 	}
 
-	// ageµÄsetterºÍgetter·½·¨
+	// ageï¿½ï¿½setterï¿½ï¿½getterï¿½ï¿½ï¿½ï¿½
 	public void setAge(int age)
 	{
 		this.age = age;
@@ -74,7 +81,7 @@ public class Person
 		return this.age;
 	}
 
-	// myEventsµÄsetterºÍgetter·½·¨
+	// myEventsï¿½ï¿½setterï¿½ï¿½getterï¿½ï¿½ï¿½ï¿½
 	public void setMyEvents(Set<MyEvent> myEvents)
 	{
 		this.myEvents = myEvents;
@@ -84,7 +91,7 @@ public class Person
 		return this.myEvents;
 	}
 
-	// emailsµÄsetterºÍgetter·½·¨
+	// emailsï¿½ï¿½setterï¿½ï¿½getterï¿½ï¿½ï¿½ï¿½
 	public void setEmails(Set<String> emails)
 	{
 		this.emails = emails;

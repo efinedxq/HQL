@@ -25,9 +25,10 @@ import org.crazyit.app.domain.*;
 public class HqlQuery {
 	public static void main(String[] args) throws Exception {
 		HqlQuery mgr = new HqlQuery();
+		mgr.addPerson();
 //		 mgr.findBfromA();
 //		 mgr.deleteR();
-		 mgr.deleteA();
+//		 mgr.deleteA();
 //		mgr.addToR();
 		// 调用查询方法
 		// mgr.findPersons();
@@ -196,6 +197,36 @@ public class HqlQuery {
 		Query query = sess.createQuery("delete AAA where aid=:aid");
 		query.setParameter("aid", aid);
 		query.executeUpdate();
+		tx.commit();
+		HibernateUtil.closeSession();
+	}
+	
+	//1~N添加N时自动添加关联表
+	private void addPerson(){
+		//不能更新自动插入关联  因为MyEvent有mappedBy属性
+//		Integer id  = 1;
+//		Person p = new Person("kuun", 23);
+//		Session sess = HibernateUtil.currentSession();
+//		Transaction tx = sess.beginTransaction();
+//		sess.save(p);
+//		Query query = sess.createQuery("from MyEvent where id=:id");
+//		query.setParameter("id", id);
+//		MyEvent myE = (MyEvent) query.list().get(0);
+//		myE.getActors().add(p);
+//		sess.save(myE);
+//		tx.commit();
+//		HibernateUtil.closeSession();
+		
+		//可以
+		Integer id  = 1;
+		Person p = new Person("jun", 23); //未持久化
+		Session sess = HibernateUtil.currentSession();
+		Transaction tx = sess.beginTransaction();
+		Query query = sess.createQuery("from MyEvent where id=:id");
+		query.setParameter("id", id);
+		MyEvent myE = (MyEvent) query.list().get(0); //持久化
+		p.getMyEvents().add(myE);
+		sess.save(p); //持久化
 		tx.commit();
 		HibernateUtil.closeSession();
 	}

@@ -5,7 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 /**
  * Description:
- * <br/>ÍøÕ¾: <a href="http://www.crazyit.org">·è¿ñJavaÁªÃË</a>
+ * <br/>ï¿½ï¿½Õ¾: <a href="http://www.crazyit.org">ï¿½ï¿½ï¿½Javaï¿½ï¿½ï¿½ï¿½</a>
  * <br/>Copyright (C), 2001-2016, Yeeku.H.Lee
  * <br/>This program is protected by copyright laws.
  * <br/>Program Name:
@@ -17,20 +17,26 @@ import javax.persistence.*;
 @Table(name="event_inf")
 public class MyEvent
 {
-	// ¶¨Òå±êÊ¶ÊôĞÔ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½
 	@Id @Column(name="event_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	// ¶¨ÒåÊÂ¼şÃû³ÆµÄ³ÉÔ±±äÁ¿
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ÆµÄ³ï¿½Ô±ï¿½ï¿½ï¿½ï¿½
 	private String title;
-	// ¶¨ÒåÊÂ¼ş·¢ÉúÊ±¼äµÄ³ÉÔ±±äÁ¿
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ä³ï¿½Ô±ï¿½ï¿½ï¿½ï¿½
 	private Date happenDate;
-	// ¶¨Òå¸ÃMyEventÊµÌå¹ØÁªµÄËùÓĞPersonÊµÌå
+	// ï¿½ï¿½ï¿½ï¿½ï¿½MyEventÊµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½PersonÊµï¿½ï¿½
 	@ManyToMany(targetEntity=Person.class , mappedBy="myEvents")
 	private Set<Person> actors
 		= new HashSet<>();
 
-	// idµÄsetterºÍgetter·½·¨
+	public MyEvent () {
+	}
+	public MyEvent(String title,Date happenDate){
+		this.title = title;
+		this.happenDate = happenDate;
+	}
+	// idï¿½ï¿½setterï¿½ï¿½getterï¿½ï¿½ï¿½ï¿½
 	public void setId(Integer id)
 	{
 		this.id = id;
@@ -40,7 +46,7 @@ public class MyEvent
 		return this.id;
 	}
 
-	// titleµÄsetterºÍgetter·½·¨
+	// titleï¿½ï¿½setterï¿½ï¿½getterï¿½ï¿½ï¿½ï¿½
 	public void setTitle(String title)
 	{
 		this.title = title;
@@ -50,7 +56,7 @@ public class MyEvent
 		return this.title;
 	}
 
-	// happenDateµÄsetterºÍgetter·½·¨
+	// happenDateï¿½ï¿½setterï¿½ï¿½getterï¿½ï¿½ï¿½ï¿½
 	public void setHappenDate(Date happenDate)
 	{
 		this.happenDate = happenDate;
@@ -60,7 +66,7 @@ public class MyEvent
 		return this.happenDate;
 	}
 
-	// actorsµÄsetterºÍgetter·½·¨
+	// actorsï¿½ï¿½setterï¿½ï¿½getterï¿½ï¿½ï¿½ï¿½
 	public void setActors(Set<Person> actors)
 	{
 		this.actors = actors;
