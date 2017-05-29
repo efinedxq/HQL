@@ -25,7 +25,8 @@ import org.crazyit.app.domain.*;
 public class HqlQuery {
 	public static void main(String[] args) throws Exception {
 		HqlQuery mgr = new HqlQuery();
-		 mgr.findBfromA();
+//		 mgr.findBfromA();
+		 mgr.deleteR();
 //		mgr.addToR();
 		// 调用查询方法
 		// mgr.findPersons();
@@ -156,13 +157,34 @@ public class HqlQuery {
 		// HibernateUtil.closeSession();
 
 		// 正确的方式
-		AAA a = new AAA(1, "a1");
-		BBB b = new BBB(7, "新增b");
 		RRR r = new RRR("新增r", 1, 7);//必须实例化Id类，必须设置aid、bid值，否则报错。
 		Session sess = HibernateUtil.currentSession();
 		Transaction tx = sess.beginTransaction();
 		sess.save(r);
 		tx.commit();
 		HibernateUtil.closeSession();
+	}
+	//删除 关联 r
+	private void deleteR(){
+		//可以
+		AAA a = new AAA(1, "a1");
+		BBB b = new BBB(2, "b2");
+		Session sess = HibernateUtil.currentSession();
+		Transaction tx = sess.beginTransaction();
+		Query query = sess.createQuery("from RRR where aaa=:aaa and bbb=:bbb");
+		query.setParameter("aaa", a);
+		query.setParameter("bbb", b);
+		RRR r = (RRR) query.list().get(0);
+		sess.delete(r);
+		tx.commit();
+		HibernateUtil.closeSession();
+		
+	   //可以
+//		RRR r = new RRR("新增r", 1, 7);
+//		Session sess = HibernateUtil.currentSession();
+//		Transaction tx = sess.beginTransaction();
+//		sess.delete(r);
+//		tx.commit();
+//		HibernateUtil.closeSession();
 	}
 }
