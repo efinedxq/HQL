@@ -36,5 +36,8 @@
 		<!-- 罗列所有持久化类的类名 -->
 		<mapping class="org.crazyit.app.domain.Person"/>
 		<mapping class="org.crazyit.app.domain.MyEvent"/>
+		<mapping class="org.crazyit.app.domain.AAA"/>
+		<mapping class="org.crazyit.app.domain.BBB"/>
+		<mapping class="org.crazyit.app.domain.RRR"/>
 	</session-factory>
 </hibernate-configuration>
