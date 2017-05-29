@@ -13,7 +13,7 @@ import org.crazyit.app.domain.*;
 
 /**
  * Description: <br/>
- * ÍøÕ¾: <a href="http://www.crazyit.org">·è¿ñJavaÁªÃË</a> <br/>
+ * ç½‘ç«™: <a href="http://www.crazyit.org">ç–¯ç‹‚Javaè”ç›Ÿ</a> <br/>
  * Copyright (C), 2001-2016, Yeeku.H.Lee <br/>
  * This program is protected by copyright laws. <br/>
  * Program Name: <br/>
@@ -26,34 +26,35 @@ public class HqlQuery {
 	public static void main(String[] args) throws Exception {
 		HqlQuery mgr = new HqlQuery();
 //		 mgr.findBfromA();
-		 mgr.deleteR();
+//		 mgr.deleteR();
+		 mgr.deleteA();
 //		mgr.addToR();
-		// µ÷ÓÃ²éÑ¯·½·¨
+		// è°ƒç”¨æŸ¥è¯¢æ–¹æ³•
 		// mgr.findPersons();
-		// // µ÷ÓÃµÚ¶ş¸ö²éÑ¯·½·¨
+		// // è°ƒç”¨ç¬¬äºŒä¸ªæŸ¥è¯¢æ–¹æ³•
 		// mgr.findPersonsByHappenDate();
-		// // µ÷ÓÃµÚ¶ş¸ö²éÑ¯·½·¨
+		// // è°ƒç”¨ç¬¬äºŒä¸ªæŸ¥è¯¢æ–¹æ³•
 		// mgr.findPersonProperty();
 	}
 
-	// µÚÒ»¸ö²éÑ¯·½·¨
+	// ç¬¬ä¸€ä¸ªæŸ¥è¯¢æ–¹æ³•
 	private void findPersons() {
-		// »ñµÃHibernate Session
+		// è·å¾—Hibernate Session
 		Session sess = HibernateUtil.currentSession();
-		// ¿ªÊ¼ÊÂÎñ
+		// å¼€å§‹äº‹åŠ¡
 		Transaction tx = sess.beginTransaction();
-		// ÒÔHQLÓï¾ä´´½¨Query¶ÔÏó.
+		// ä»¥HQLè¯­å¥åˆ›å»ºQueryå¯¹è±¡.
 		// List pl = sess.createQuery("select distinct p from Person p "
 		// + "join p.myEvents where title = :eventTitle")
-		// // Ö´ĞĞsetString()·½·¨ÎªHQLÓï¾äµÄ²ÎÊı¸³Öµ
-		// .setString("eventTitle" , "ºÜÆÕÍ¨µÄÊÂÇé")
-		// // Queryµ÷ÓÃlist()·½·¨»ñÈ¡²éÑ¯µÄÈ«²¿ÊµÀı
+		// // æ‰§è¡ŒsetString()æ–¹æ³•ä¸ºHQLè¯­å¥çš„å‚æ•°èµ‹å€¼
+		// .setString("eventTitle" , "å¾ˆæ™®é€šçš„äº‹æƒ…")
+		// // Queryè°ƒç”¨list()æ–¹æ³•è·å–æŸ¥è¯¢çš„å…¨éƒ¨å®ä¾‹
 		// .list();
 		List p2 = sess.createQuery("select distinct p from Person p ")
-				// Queryµ÷ÓÃlist()·½·¨»ñÈ¡²éÑ¯µÄÈ«²¿ÊµÀı
+				// Queryè°ƒç”¨list()æ–¹æ³•è·å–æŸ¥è¯¢çš„å…¨éƒ¨å®ä¾‹
 				.list();
 
-		// ±éÀú²éÑ¯µÄÈ«²¿½á¹û
+		// éå†æŸ¥è¯¢çš„å…¨éƒ¨ç»“æœ
 		for (Object ele : p2) {
 			Person p = (Person) ele;
 			System.out.print(p.toString());
@@ -62,29 +63,29 @@ public class HqlQuery {
 
 		}
 
-		// Ìá½»ÊÂÎñ
+		// æäº¤äº‹åŠ¡
 		tx.commit();
 		HibernateUtil.closeSession();
 	}
 
-	// µÚ¶ş¸ö²éÑ¯·½·¨
+	// ç¬¬äºŒä¸ªæŸ¥è¯¢æ–¹æ³•
 	private void findPersonsByHappenDate() throws Exception {
-		// »ñµÃHibernate Session¶ÔÏó
+		// è·å¾—Hibernate Sessionå¯¹è±¡
 		Session sess = HibernateUtil.currentSession();
 		Transaction tx = sess.beginTransaction();
-		// ½âÎö³öDate¶ÔÏó
+		// è§£æå‡ºDateå¯¹è±¡
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date start = sdf.parse("2005-01-01");
-		System.out.println("ÏµÍ³¿ªÊ¼Í¨¹ıÈÕÆÚ²éÕÒÈË" + start);
-		// Í¨¹ıSessionµÄcreateQuery·½·¨´´½¨Query¶ÔÏó
+		System.out.println("ç³»ç»Ÿå¼€å§‹é€šè¿‡æ—¥æœŸæŸ¥æ‰¾äºº" + start);
+		// é€šè¿‡Sessionçš„createQueryæ–¹æ³•åˆ›å»ºQueryå¯¹è±¡
 		List pl = sess
 				.createQuery("select distinct p from Person p " + "inner join p.myEvents event where event.happenDate "
 						+ "between :firstDate and :endDate")
-				// ÉèÖÃ²ÎÊı
+				// è®¾ç½®å‚æ•°
 				.setDate("firstDate", start).setDate("endDate", new Date())
-				// ·µ»Ø½á¹û¼¯
+				// è¿”å›ç»“æœé›†
 				.list();
-		// ±éÀú½á¹û¼¯
+		// éå†ç»“æœé›†
 		for (Object ele : pl) {
 			Person p = (Person) ele;
 			System.out.println(p.getName());
@@ -93,27 +94,27 @@ public class HqlQuery {
 		HibernateUtil.closeSession();
 	}
 
-	// µÚÈı¸ö²éÑ¯·½·¨£º²éÑ¯ÊôĞÔ
+	// ç¬¬ä¸‰ä¸ªæŸ¥è¯¢æ–¹æ³•ï¼šæŸ¥è¯¢å±æ€§
 	private void findPersonProperty() {
-		// »ñµÃHibernate Session
+		// è·å¾—Hibernate Session
 		Session sess = HibernateUtil.currentSession();
-		// ¿ªÊ¼ÊÂÎñ
+		// å¼€å§‹äº‹åŠ¡
 		Transaction tx = sess.beginTransaction();
-		// ÒÔHQLÓï¾ä´´½¨Query¶ÔÏó.
+		// ä»¥HQLè¯­å¥åˆ›å»ºQueryå¯¹è±¡.
 		List pl = sess.createQuery("select distinct p.id,  p.name , p.age " + "from Person p join p.myEvents")
-				// Queryµ÷ÓÃlist()·½·¨·ÃÎÊ²éÑ¯µÃµ½µÄÈ«²¿ÊôĞÔ
+				// Queryè°ƒç”¨list()æ–¹æ³•è®¿é—®æŸ¥è¯¢å¾—åˆ°çš„å…¨éƒ¨å±æ€§
 				.list();
-		// ±éÀú²éÑ¯µÄÈ«²¿½á¹û
+		// éå†æŸ¥è¯¢çš„å…¨éƒ¨ç»“æœ
 		for (Object ele : pl) {
 			Object[] objs = (Object[]) ele;
 			System.out.println(java.util.Arrays.toString(objs));
 		}
-		// Ìá½»ÊÂÎñ
+		// æäº¤äº‹åŠ¡
 		tx.commit();
 		HibernateUtil.closeSession();
 	}
 
-	// ´ÓaÖĞ»ñÈ¡Ïà¹ØÁªµÄb
+	// ä»aä¸­è·å–ç›¸å…³è”çš„b
 	private void findBfromA() {
 		Integer aid = 1;
 		Session sess = HibernateUtil.currentSession();
@@ -132,12 +133,12 @@ public class HqlQuery {
 		HibernateUtil.closeSession();
 	}
 
-	// ÏòrÖĞÔö¼ÓĞÂ¹ØÁª
+	// å‘rä¸­å¢åŠ æ–°å…³è”
 	private void addToR() {
-		// ´íÎóµÄ·½Ê½
+		// é”™è¯¯çš„æ–¹å¼
 		// AAA a = new AAA(1,"a1");
-		// BBB b = new BBB(7,"ĞÂÔöb");
-		// RRR r = new RRR("ĞÂÔör");
+		// BBB b = new BBB(7,"æ–°å¢b");
+		// RRR r = new RRR("æ–°å¢r");
 		// Session sess = HibernateUtil.currentSession();
 		// Transaction tx = sess.beginTransaction();
 		// r.setAAA(a);
@@ -146,27 +147,27 @@ public class HqlQuery {
 		// tx.commit();
 		// HibernateUtil.closeSession();
 
-		// ´íÎóµÄ·½Ê½
-		// AAA a = new AAA(7,"ĞÂÔö7");
+		// é”™è¯¯çš„æ–¹å¼
+		// AAA a = new AAA(7,"æ–°å¢7");
 		// BBB b = new BBB(1,"b1");
-		// RRR r = new RRR("ĞÂÔör2",a,b);
+		// RRR r = new RRR("æ–°å¢r2",a,b);
 		// Session sess = HibernateUtil.currentSession();
 		// Transaction tx = sess.beginTransaction();
 		// sess.save(r);
 		// tx.commit();
 		// HibernateUtil.closeSession();
 
-		// ÕıÈ·µÄ·½Ê½
-		RRR r = new RRR("ĞÂÔör", 1, 7);//±ØĞëÊµÀı»¯IdÀà£¬±ØĞëÉèÖÃaid¡¢bidÖµ£¬·ñÔò±¨´í¡£
+		// æ­£ç¡®çš„æ–¹å¼
+		RRR r = new RRR("æ–°å¢r", 1, 7);//å¿…é¡»å®ä¾‹åŒ–Idç±»ï¼Œå¿…é¡»è®¾ç½®aidã€bidå€¼ï¼Œå¦åˆ™æŠ¥é”™ã€‚
 		Session sess = HibernateUtil.currentSession();
 		Transaction tx = sess.beginTransaction();
 		sess.save(r);
 		tx.commit();
 		HibernateUtil.closeSession();
 	}
-	//É¾³ı ¹ØÁª r
+	//åˆ é™¤ å…³è” r
 	private void deleteR(){
-		//¿ÉÒÔ
+		//å¯ä»¥
 		AAA a = new AAA(1, "a1");
 		BBB b = new BBB(2, "b2");
 		Session sess = HibernateUtil.currentSession();
@@ -179,12 +180,23 @@ public class HqlQuery {
 		tx.commit();
 		HibernateUtil.closeSession();
 		
-	   //¿ÉÒÔ
-//		RRR r = new RRR("ĞÂÔör", 1, 7);
+	   //å¯ä»¥
+//		RRR r = new RRR("æ–°å¢r", 1, 7);
 //		Session sess = HibernateUtil.currentSession();
 //		Transaction tx = sess.beginTransaction();
 //		sess.delete(r);
 //		tx.commit();
 //		HibernateUtil.closeSession();
+	}
+	//hqlåˆ é™¤æ“ä½œ
+	private void deleteA(){
+		Integer aid  = 3;
+		Session sess = HibernateUtil.currentSession();
+		Transaction tx = sess.beginTransaction();
+		Query query = sess.createQuery("delete AAA where aid=:aid");
+		query.setParameter("aid", aid);
+		query.executeUpdate();
+		tx.commit();
+		HibernateUtil.closeSession();
 	}
 }
